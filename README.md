@@ -142,6 +142,3 @@ The notebook contains the project's experimental or development workflow. Review
 
 GitHub: [@hkachhadia](https://github.com/hkachhadia)
 
-## License
-
-A license has not yet been specified. Please add an appropriate license before permitting others to reuse, modify, or distribute this project.
