@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="section-title">Live PPE Monitoring Demo</h2>
+
+<div class="control-room">
+
+    <!-- ================= VIDEO PANEL ================= -->
+    <div class="video-panel">
+        <div class="video-header">
+            <span>Live Camera Feed</span>
+            <button onclick="toggleFullscreen()" class="fullscreen-btn">
+                ⛶
+            </button>
+        </div>
+
+        <img id="videoFeed" src="{{ url_for('video_feed') }}" alt="Live Video Feed">
+    </div>
+
+    <!-- ================= STATUS PANEL ================= -->
+    <div class="status-panel">
+        <h3>Real-Time Safety Status</h3>
+
+        <div id="dashboard-container">
+            {% include "dashboard_table.html" %}
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Dashboard refresh ONLY (do not touch video src)
+    setInterval(() => {
+        fetch("/dashboard_data")
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById("dashboard-container").innerHTML = html;
+            });
+    }, 2000);
+
+    // Fullscreen toggle
+    function toggleFullscreen() {
+        const video = document.getElementById("videoFeed");
+        if (!document.fullscreenElement) {
+            video.requestFullscreen();
+        } else {
+            document.exitFullscreen();
+        }
+    }
+</script>
+
+{% endblock %}

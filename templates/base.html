@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>PPE Detection System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="nav-title">PPE Detection System</div>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/demo" class="demo-btn">Demo</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+</body>
+
+</html>

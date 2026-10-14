@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPE Detection System - Advanced Workplace Safety</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            color: #e5e7eb;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(2, 6, 23, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(56, 189, 248, 0.1);
+            padding: 20px 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 15px 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #f97316, #facc15);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .cta-btn {
+            background: linear-gradient(135deg, #f97316 0%, #fb923c 100%);
+            color: #020617;
+            padding: 12px 28px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(249, 115, 22, 0.5);
+        }
+
+        /* Hero Section */
+        .hero {
+            max-width: 1400px;
+            margin: 140px auto 100px;
+            padding: 0 40px;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-content {
+            animation: fadeInUp 0.8s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(249, 115, 22, 0.1);
+            border: 1px solid rgba(249, 115, 22, 0.3);
+            padding: 8px 16px;
+            border-radius: 50px;
+            color: #fb923c;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .badge-icon {
+            font-size: 16px;
+        }
+
+        h1 {
+            font-size: 56px;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            font-weight: 800;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #f97316 0%, #facc15 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-desc {
+            font-size: 18px;
+            line-height: 1.7;
+            color: #94a3b8;
+            margin-bottom: 36px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+        }
+
+        .primary-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #f97316 0%, #fb923c 100%);
+            color: #020617;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(249, 115, 22, 0.4);
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(249, 115, 22, 0.6);
+        }
+
+        /* Hero Visual */
+        .hero-visual {
+            position: relative;
+            animation: fadeInRight 1s ease;
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .monitor-card {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            border: 2px solid rgba(56, 189, 248, 0.3);
+            border-radius: 20px;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .monitor-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.05) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .monitor-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 24px;
+            font-weight: 600;
+            color: #e5e7eb;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.7;
+                transform: scale(1.1);
+            }
+        }
+
+        /* New Safety Monitoring Graphics */
+        .safety-dashboard {
+            background: #000;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
+        .timestamp {
+            font-family: 'Courier New', monospace;
+            color: #38bdf8;
+            font-size: 12px;
+        }
+
+        .detection-area {
+            position: relative;
+            height: 200px;
+            background: radial-gradient(circle at center, rgba(56, 189, 248, 0.1) 0%, transparent 70%);
+            border: 1px dashed rgba(56, 189, 248, 0.3);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Animated radar sweep */
+        .radar-sweep {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: conic-gradient(from 0deg at 50% 50%,
+                    transparent 0deg,
+                    rgba(34, 197, 94, 0.3) 60deg,
+                    transparent 120deg);
+            animation: radarSweep 4s linear infinite;
+        }
+
+        @keyframes radarSweep {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Worker icon */
+        .worker-icon {
+            position: relative;
+            z-index: 2;
+            font-size: 64px;
+            filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.5));
+        }
+
+        /* Detection indicators */
+        .detection-indicators {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .indicator {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            color: #22c55e;
+            border-left: 3px solid #22c55e;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .indicator:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .indicator:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        /* Compliance meter */
+        .compliance-meter {
+            margin-top: 16px;
+            padding: 12px;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 8px;
+        }
+
+        .meter-label {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-bottom: 8px;
+        }
+
+        .meter-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .meter-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #22c55e, #4ade80);
+            width: 100%;
+            animation: fillMeter 2s ease-out;
+            box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+        }
+
+        @keyframes fillMeter {
+            from {
+                width: 0%;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+
+        .meter-value {
+            text-align: right;
+            margin-top: 6px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #22c55e;
+        }
+
+        .ppe-status {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .ppe-item {
+            background: rgba(5, 46, 22, 0.5);
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            padding: 12px 16px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .ppe-item:hover {
+            background: rgba(5, 46, 22, 0.8);
+            border-color: #22c55e;
+            transform: translateX(5px);
+        }
+
+        .check-icon {
+            color: #22c55e;
+            font-size: 18px;
+        }
+
+        /* Features Section */
+        .features {
+            max-width: 1400px;
+            margin: 120px auto;
+            padding: 0 40px;
+            text-align: center;
+        }
+
+        .features h2 {
+            font-size: 48px;
+            margin-bottom: 16px;
+            font-weight: 800;
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: #94a3b8;
+            margin-bottom: 60px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.4) 100%);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 16px;
+            padding: 32px;
+            text-align: left;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #f97316, #facc15);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: #38bdf8;
+            box-shadow: 0 20px 40px rgba(56, 189, 248, 0.2);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.2) 0%, rgba(250, 204, 21, 0.2) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        .feature-card h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+            color: #e5e7eb;
+        }
+
+        .feature-card p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            max-width: 1400px;
+            margin: 100px auto;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.6) 0%, rgba(30, 41, 59, 0.4) 100%);
+            border-radius: 24px;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 20px;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #f97316 0%, #facc15 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            color: #94a3b8;
+            font-size: 16px;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(2, 6, 23, 0.8);
+            border-top: 1px solid rgba(56, 189, 248, 0.1);
+            padding: 60px 0 30px;
+            margin-top: 120px;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand h3 {
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+
+        .footer-brand p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .footer-links h4 {
+            font-size: 16px;
+            margin-bottom: 16px;
+            color: #e5e7eb;
+        }
+
+        .footer-links a {
+            display: block;
+            color: #94a3b8;
+            text-decoration: none;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #38bdf8;
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(56, 189, 248, 0.1);
+            color: #64748b;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            h1 {
+                font-size: 42px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 20px;
+            }
+
+            .nav-links a:not(.cta-btn) {
+                display: none;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <span>PPE Detection System</span>
+            </a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="#features">Features</a>
+                <a href="/technology">Technology</a>
+                <!-- <a href="/contact">Contact</a> -->
+                <a href="/demo" class="cta-btn">Live Demo →</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="badge">
+                <span class="badge-icon">⚡</span>
+                AI-Powered Workplace Safety
+            </div>
+
+            <h1>
+                Protect Your Workforce with
+                <span class="gradient-text">Real-Time PPE Intelligence</span>
+            </h1>
+
+            <p class="hero-desc">
+                PPE Detection System uses advanced computer vision to automatically detect
+                Personal Protective Equipment (PPE) compliance in real time, helping
+                organizations reduce workplace incidents while meeting safety
+                regulations effortlessly.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="/demo" class="primary-btn">
+                    Start Live Monitoring
+                    <span>→</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="hero-visual">
+            <div class="monitor-card">
+                <div class="monitor-header">
+                    <div class="status-dot"></div>
+                    Live Safety Monitoring
+                </div>
+
+                <div class="safety-dashboard">
+                    <div class="dashboard-header">
+                        <span style="font-size: 12px; color: #94a3b8;">ACTIVE DETECTION</span>
+                        <span class="timestamp">2026-01-22 14:32:45</span>
+                    </div>
+
+                    <div class="detection-area">
+                        <div class="radar-sweep"></div>
+                        <div class="worker-icon">👷</div>
+
+                        <div class="detection-indicators">
+                            <div class="indicator">● HELMET: OK</div>
+                            <div class="indicator">● VEST: OK</div>
+                            <div class="indicator">● GLOVES: OK</div>
+                        </div>
+                    </div>
+
+                    <div class="compliance-meter">
+                        <div class="meter-label">Safety Compliance Level</div>
+                        <div class="meter-bar">
+                            <div class="meter-fill"></div>
+                        </div>
+                        <div class="meter-value">100% COMPLIANT</div>
+                    </div>
+                </div>
+
+                <div class="ppe-status">
+                    <div class="ppe-item">
+                        <span class="check-icon">✓</span>
+                        Helmet Detected
+                    </div>
+                    <div class="ppe-item">
+                        <span class="check-icon">✓</span>
+                        Safety Vest Detected
+                    </div>
+                    <div class="ppe-item">
+                        <span class="check-icon">✓</span>
+                        Gloves Detected
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">99.5%</div>
+                <div class="stat-label">Detection Accuracy</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">&lt;100ms</div>
+                <div class="stat-label">Response Time</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Continuous Monitoring</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">Multi</div>
+                <div class="stat-label">Worker Tracking</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <h2>Comprehensive Safety Intelligence</h2>
+        <p class="section-subtitle">
+            Purpose-built AI capabilities engineered for high-risk industrial environments
+        </p>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">👁️</div>
+                <h3>Real-Time PPE Detection</h3>
+                <p>
+                    Instant identification of helmets, vests, gloves, and other PPE
+                    with ultra-low latency for immediate safety compliance.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">👥</div>
+                <h3>Multi-Worker Tracking</h3>
+                <p>
+                    Track multiple workers simultaneously with individual IDs
+                    and real-time compliance status across your facility.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Advanced Analytics</h3>
+                <p>
+                    Actionable insights with compliance trends, risk patterns,
+                    and performance benchmarking for data-driven decisions.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🚨</div>
+                <h3>Instant Safety Alerts</h3>
+                <p>
+                    Immediate alerts for PPE violations to prevent accidents
+                    before they happen with automated notification systems.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📜</div>
+                <h3>Regulatory Compliance</h3>
+                <p>
+                    Ensures compliance with OSHA, ISO, and industry safety standards
+                    with automated reporting and documentation.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔌</div>
+                <h3>Seamless Integration</h3>
+                <p>
+                    Easily integrates with existing CCTV cameras and monitoring systems
+                    without expensive hardware upgrades.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>PPE Detection System</h3>
+                    <p>
+                        Advanced AI-powered PPE detection system ensuring
+                        workplace safety compliance in real time with cutting-edge
+                        computer vision technology.
+                    </p>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Product</h4>
+                    <a href="/features">Features</a>
+                    <a href="/technology">Technology</a>
+                    <a href="/demo">Demo</a>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Company</h4>
+                    <a href="/contact">Contact</a>
+                    <a href="/blog">Blog</a>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Resources</h4>
+                    <a href="/documentation">Documentation</a>
+                    <a href="/support">Support</a>
+                    <a href="/case-studies">Case Studies</a>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 PPE Detection System. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function () {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

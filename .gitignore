@@ -1,0 +1,33 @@
+
+# Python virtual environments
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.cache
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# YOLO training outputs
+runs/
+
+# Local database
+safety.db
+
+# Jupyter temporary files
+.ipynb_checkpoints/
+
+# Dataset stored separately
+construction-ppe/
+
+# Private profile photos
+static/profile/dhruv.jpeg
+static/profile/het.jpeg
+static/profile/param.jpeg
+static/profile/urvil.jpeg

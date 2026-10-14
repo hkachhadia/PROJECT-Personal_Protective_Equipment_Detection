@@ -1,0 +1,33 @@
+{% if table|length == 0 %}
+<p style="text-align:center;">No workers detected yet.</p>
+{% else %}
+
+<div class="stats">
+    <div>Total: {{ stats.total }}</div>
+    <div class="safe">Safe: {{ stats.safe }}</div>
+    <div class="unsafe">Unsafe: {{ stats.unsafe }}</div>
+</div>
+
+<table>
+    <tr>
+        <th>Person</th>
+        <th>Helmet</th>
+        <th>Gloves</th>
+        <th>Vest</th>
+        <th>Status</th>
+        <th>Confidence</th>
+    </tr>
+
+    {% for row in table %}
+    <tr class="{{ 'safe-row' if row.Status == 'Safe' else 'unsafe-row' }}">
+        <td>{{ row.Person }}</td>
+        <td class="{{ 'true' if row.Helmet else 'false' }}">{{ row.Helmet }}</td>
+        <td class="{{ 'true' if row.Gloves else 'false' }}">{{ row.Gloves }}</td>
+        <td class="{{ 'true' if row.Vest else 'false' }}">{{ row.Vest }}</td>
+        <td>{{ row.Status }}</td>
+        <td>{{ row.Confidence }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endif %}
